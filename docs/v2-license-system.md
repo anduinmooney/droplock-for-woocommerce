@@ -348,7 +348,7 @@ class DropLock_Updater {
 	const REMOTE_TTL       = 6 * HOUR_IN_SECONDS;
 
 	/** Where to read the latest release manifest. */
-	const RELEASE_URL = 'https://api.github.com/repos/REPLACE-ME-USER/droplock-for-woocommerce/releases/latest';
+	const RELEASE_URL = 'https://api.github.com/repos/anduinmooney/droplock-for-woocommerce/releases/latest';
 
 	public function register_hooks() {
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'inject_update' ) );
