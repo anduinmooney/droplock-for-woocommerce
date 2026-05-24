@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: DropLock for WooCommerce 1.0.0\n"
-"Report-Msgid-Bugs-To: https://example.com/droplock\n"
+"Report-Msgid-Bugs-To: https://droplockwp.com\n"
 "POT-Creation-Date: 2026-05-22 00:00+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
