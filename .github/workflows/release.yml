@@ -1,0 +1,47 @@
+name: Release plugin zip
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Stage plugin under its slug folder
+        run: |
+          mkdir -p _stage/droplock-for-woocommerce
+          rsync -a --exclude='.git' --exclude='.github' --exclude='_stage' ./ _stage/droplock-for-woocommerce/
+
+      - name: Build zip
+        run: |
+          mkdir -p dist
+          cd _stage
+          zip -r "$GITHUB_WORKSPACE/dist/droplock-for-woocommerce.zip" droplock-for-woocommerce
+
+      - name: Compute version
+        id: ver
+        run: echo "v=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: DropLock ${{ steps.ver.outputs.v }}
+          generate_release_notes: true
+          files: dist/droplock-for-woocommerce.zip
+
+      - name: Upload zip artifact (for manual runs)
+        uses: actions/upload-artifact@v4
+        with:
+          name: droplock-for-woocommerce-zip
+          path: dist/droplock-for-woocommerce.zip
